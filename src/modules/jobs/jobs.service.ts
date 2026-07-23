@@ -93,10 +93,8 @@ export class JobsService {
     if (dto.minSalary) qb.andWhere('j.salary_max >= :mn', { mn: dto.minSalary });
     if (dto.maxSalary) qb.andWhere('j.salary_min <= :mx', { mx: dto.maxSalary });
 
-    qb.orderBy(
-      `CASE WHEN j.is_premium = true AND j.premium_boosted_at > NOW() - INTERVAL '4 hours' THEN 0 ELSE 1 END`,
-      'ASC',
-    ).addOrderBy('j.created_at', 'DESC');
+    qb.orderBy('j.is_premium', 'DESC')
+  .addOrderBy('j.created_at', 'DESC');
 
     const [data, total] = await qb.skip(skip).take(take).getManyAndCount();
     return paginate(data, total, page, limit);
