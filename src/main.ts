@@ -46,7 +46,7 @@ async function bootstrap() {
   app.useWebSocketAdapter(new IoAdapter(app));
   app.enableShutdownHooks();
 
-  const port = process.env.PORT || ;
+  const port = process.env.PORT || 3000 ;
   await app.listen(port, "0.0.0.0");
   console.log(`Leo API running on http://localhost:${port}/v1`);
   console.log(`Health check: http://localhost:${port}/v1/health`);
