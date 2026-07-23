@@ -1,0 +1,19 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npm install && npm run build"
+
+[deploy]
+startCommand = "node dist/main"
+healthcheckPath = "/v1/health"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "leo-api"
+
+[environments.production]
+NODE_ENV = "production"
+
+[environments.development]
+NODE_ENV = "development"
