@@ -88,7 +88,7 @@ export class AuthService {
       throw new HttpException({
         code: 'AUTH_OTP_MAX_ATTEMPTS',
         message: 'Max OTP attempts reached',
-      });
+      }, 429);
     }
 
     if (this.hashValue(dto.otp) !== req.otpHash) {
