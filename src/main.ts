@@ -30,6 +30,10 @@ async function bootstrap() {
   expressApp.get('/v1/health', (_req: any, res: any) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
+expressApp.get('/', (_req: any, res: any) => {
+  res.send('Leo Platform API is running!');
+});
+
 
   app.useGlobalPipes(
     new ValidationPipe({
