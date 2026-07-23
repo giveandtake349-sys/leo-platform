@@ -1,6 +1,6 @@
 import {
   Injectable, BadRequestException, UnauthorizedException,
-  TooManyRequestsException, ForbiddenException,
+  HttpException, ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
@@ -48,7 +48,7 @@ export class AuthService {
 
     const rateLimit = this.config.get<number>('OTP_RATE_LIMIT_PER_HOUR', 5);
     if (recentCount >= rateLimit) {
-      throw new TooManyRequestsException('Too many OTP requests. Please try again later.');
+      throw new HttpException('Too many OTP requests. Please try again later.');
     }
 
     const otpPlain = randomInt(100000, 999999).toString();
@@ -85,7 +85,7 @@ export class AuthService {
       throw new BadRequestException({ code: 'AUTH_OTP_EXPIRED', message: 'OTP expired' });
     }
     if (req.attemptCount >= req.maxAttempts) {
-      throw new TooManyRequestsException({
+      throw new HttpException({
         code: 'AUTH_OTP_MAX_ATTEMPTS',
         message: 'Max OTP attempts reached',
       });
