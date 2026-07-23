@@ -48,7 +48,7 @@ export class AuthService {
 
     const rateLimit = this.config.get<number>('OTP_RATE_LIMIT_PER_HOUR', 5);
     if (recentCount >= rateLimit) {
-      throw new HttpException('Too many OTP requests. Please try again later.');
+      throw new HttpException('Too many OTP requests. Please try again later.', 429);
     }
 
     const otpPlain = randomInt(100000, 999999).toString();
