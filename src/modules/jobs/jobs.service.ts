@@ -81,8 +81,8 @@ export class JobsService {
     const { skip, take, page, limit } = paginationParams(dto);
     const qb = this.jobRepo
       .createQueryBuilder('j')
-      .leftJoinAndSelect('j.company', 'c')
-      .leftJoinAndSelect('j.category', 'cat')
+     // .leftJoinAndSelect('j.company', 'c')
+     // .leftJoinAndSelect('j.category', 'cat')
       .where('j.deleted_at IS NULL')
       .andWhere('j.status = :s', { s: 'active' });
 
