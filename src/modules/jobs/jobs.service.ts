@@ -96,7 +96,12 @@ export class JobsService {
     qb.orderBy('j.is_premium', 'DESC')
   .addOrderBy('j.created_at', 'DESC');
 
-    const [data, total] = await qb.skip(skip).take(take).getManyAndCount();
+    qb.skip(skip).take(take);
+
+const data = await qb.getMany();
+const total = await qb.getCount();
+
+return paginate(data, total, page, limit);
     return paginate(data, total, page, limit);
   }
 
