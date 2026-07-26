@@ -1,2 +1,2 @@
 [build]
-watchPatterns = ["leo-backend/**"]
+builder = "nixpacks"
