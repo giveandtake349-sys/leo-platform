@@ -46,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _myUserId = await StorageService.getUserId();
     final token = await StorageService.getAccessToken();
 
-    _socket = io.io('https://api.leo.app', io.OptionBuilder()
+    _socket = io.io( 'https://leo-platform-production.up.railway.app', io.OptionBuilder()
       .setTransports(['websocket'])
       .setQuery({'token': token})
       .build());

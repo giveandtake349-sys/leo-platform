@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'storage_service.dart';
 
 class ApiClient {
-  static const _baseUrl = 'https://api.leo.app/v1';
+  static const _baseUrl = 'https://leo-platform-production.up.railway.app/v1';
   static ApiClient? _instance;
   late final Dio _dio;
 
