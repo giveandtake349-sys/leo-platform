@@ -1,0 +1,75 @@
+erDiagram
+    USERS ||--o| COMPANIES : "owns (employer)"
+    USERS ||--o| WORKER_PROFILES : "has (worker)"
+    USERS ||--|| WALLETS : owns
+    CATEGORIES ||--o{ JOBS : classifies
+    CATEGORIES ||--o{ SKILLS : groups
+    COMPANIES ||--o{ JOBS : posts
+    WORKER_PROFILES ||--o{ WORKER_SKILLS : lists
+    SKILLS ||--o{ WORKER_SKILLS : "tagged on"
+    JOBS ||--o{ APPLICATIONS : receives
+    WORKER_PROFILES ||--o{ APPLICATIONS : submits
+    COMPANIES ||--o{ INTERESTS : sends
+    WORKER_PROFILES ||--o{ INTERESTS : receives
+    USERS ||--o{ CHATS : participates
+    JOBS ||--o{ CHATS : "context for"
+    CHATS ||--o{ MESSAGES : contains
+    JOBS ||--o{ CONTRACTS : "results in"
+    CONTRACTS ||--o{ MILESTONES : "broken into"
+    CONTRACTS ||--o{ ESCROWS : secures
+    MILESTONES ||--o| ESCROWS : funds
+    ESCROWS ||--o{ ESCROW_TRANSITIONS : "state history"
+    WALLETS ||--o{ WALLET_TRANSACTIONS : records
+    WALLETS ||--o{ WITHDRAWALS : requests
+    USERS ||--o{ PAYMENT_TRANSACTIONS : initiates
+    CONTRACTS ||--o{ REVIEWS : generates
+    USERS ||--o{ SUBSCRIPTIONS : purchases
+    USERS ||--o{ NOTIFICATIONS : receives
+
+    USERS {
+        uuid id PK
+        enum role
+        bytea phone_encrypted
+        text phone_hash
+        bool is_premium
+    }
+    COMPANIES {
+        uuid id PK
+        uuid user_id FK
+        text company_name
+        text owner_name
+    }
+    WORKER_PROFILES {
+        uuid id PK
+        uuid user_id FK
+        text full_name
+        enum availability_mode
+        bool open_to_work
+    }
+    JOBS {
+        uuid id PK
+        uuid company_id FK
+        uuid category_id FK
+        enum job_type
+        bool is_premium
+        timestamptz premium_boosted_at
+    }
+    CONTRACTS {
+        uuid id PK
+        uuid job_id FK
+        enum contract_type
+        enum status
+    }
+    ESCROWS {
+        uuid id PK
+        uuid contract_id FK
+        uuid milestone_id FK
+        enum status
+        numeric amount
+    }
+    WALLETS {
+        uuid id PK
+        uuid user_id FK
+        numeric available_balance
+        numeric escrow_balance
+    }
